@@ -1,43 +1,30 @@
 # OmniRoot AI Web
 
-OmniRoot is a local-first, cross-platform AI chat starter for Windows, Android browsers/PWA, and the web.
+OmniRoot is a browser-based AI chat project for Android, Windows, and desktop browsers.
 
-## What's included
+## Recommended: deploy directly from GitHub to Cloudflare
 
-- Responsive dark chat interface.
-- FastAPI backend with a single `/api/chat` endpoint.
-- Ollama local-model integration.
-- Optional Claude API integration using a server-side key.
-- Health status endpoint and PWA manifest.
-- Windows setup guide and environment-variable example.
+The `cloudflare/` folder contains a Cloudflare Worker that serves the responsive web UI and the AI API together. This deployment does not require Pydroid, Termux, or a personal computer to stay online.
 
-## Run on Windows
+Follow [CLOUDFLARE-DEPLOY.md](CLOUDFLARE-DEPLOY.md). After connecting the GitHub repository to Cloudflare Workers, pushes to the selected branch can deploy automatically.
 
-See [START-WINDOWS.md](START-WINDOWS.md).
+The Cloudflare version uses the Workers AI binding and the `@cf/meta/llama-3.1-8b-instruct` model. Cloudflare account eligibility, model availability, quotas, and billing rules apply. This is not unlimited Claude access.
 
-Quick start:
+## Alternative: run locally on Windows
 
-```powershell
-py -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-ollama pull llama3.2:3b
-uvicorn app.main:app --host 127.0.0.1 --port 8000
-```
+The `app/` folder contains an optional FastAPI + Ollama starter. See [START-WINDOWS.md](START-WINDOWS.md).
 
-Open http://127.0.0.1:8000.
+## Project contents
 
-## Providers and limits
-
-- Ollama runs a model on hardware you control. There is no per-token cloud API bill, but performance and capacity depend on your device, memory, electricity, and network.
-- Claude is optional and requires authorized API access. Its usage is subject to Anthropic's quotas, rate limits, and charges.
-- This starter does not bypass provider limits or promise unlimited cloud AI. It currently lets the user choose Ollama or Claude; automatic multi-provider fallback is a future enhancement.
-- Do not silently switch to a paid provider. Ask the user first.
+- `cloudflare/`: deployable web app and AI Worker for Cloudflare.
+- `app/`: optional FastAPI web app for local development.
+- `INTEGRATIONS.md`: open-source integration plan.
+- `CLOUDFLARE-DEPLOY.md`: GitHub-to-Cloudflare deployment steps.
 
 ## Security
 
-Keep `ANTHROPIC_API_KEY` on the backend only. Never put secrets in browser code or commit real credentials. Use HTTPS and an appropriately secured deployment before exposing the app publicly.
+Do not commit API keys, cookies, or access tokens. Keep secrets in server-side deployment settings. A public URL can let other people use the AI endpoint under your account's usage limits, so review access and usage before sharing it.
 
-## Project status
+## Status
 
-The first runnable starter has been added to the repository. It has not yet been deployed or tested in your environment.
+The Cloudflare deployment files are committed, but the app is not live until you connect the repository in Cloudflare and complete the first deployment.
