@@ -1,44 +1,43 @@
 # OmniRoot AI Web
 
-OmniRoot is a provider-switching AI chat starter. It uses legitimate provider access and a user-controlled local model where available.
+OmniRoot is a local-first, cross-platform AI chat starter for Windows, Android browsers/PWA, and the web.
 
-## No artificial unlimited Claude access
+## What's included
 
-Claude API has usage tiers, rate limits, and spend limits. OmniRoot will not bypass those controls, share accounts, rotate identities, or conceal usage. If Claude is unavailable or its quota is reached, the app can switch only to another provider with valid credentials and remaining quota.
+- Responsive dark chat interface.
+- FastAPI backend with a single `/api/chat` endpoint.
+- Ollama local-model integration.
+- Optional Claude API integration using a server-side key.
+- Health status endpoint and PWA manifest.
+- Windows setup guide and environment-variable example.
 
-## Practical ways to keep chat available
+## Run on Windows
 
-1. Local model: run an open model on a computer you control with Ollama and connect the web app to your own backend. Usage is limited by your hardware, electricity, and network.
-2. Free provider tiers: configure providers that offer a free tier, following their terms and quotas. Free tiers can change and are not guaranteed to be unlimited.
-3. Provider fallback: switch to another configured provider after a temporary outage or quota response. Respect Retry-After and do not repeatedly retry a provider that rejected requests.
-4. Usage controls: set request/token caps, show the active provider, and ask before using any paid provider.
+See [START-WINDOWS.md](START-WINDOWS.md).
 
-## Recommended architecture
+Quick start:
 
-- Browser UI: chat, model selector, provider status, and conversation history.
-- Backend: one /api/chat endpoint. Keep provider credentials on the server, never in browser JavaScript or a public repository.
-- Provider adapters: Claude, other providers with authorized API access, and a local Ollama endpoint.
-- Fallback router: use only configured providers and honor their terms, quotas, and retry guidance.
-- Deployment: static frontend plus a serverless/backend service. GitHub Pages alone cannot safely store API secrets or run a private API proxy.
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+ollama pull llama3.2:3b
+uvicorn app.main:app --host 127.0.0.1 --port 8000
+```
 
-## Environment variables
+Open http://127.0.0.1:8000.
 
-Store these as deployment secrets, not in source control:
-- ANTHROPIC_API_KEY (optional; authorized Claude API access)
-- OPENAI_API_KEY (optional; only with an authorized account)
-- OLLAMA_BASE_URL (optional; your own Ollama server URL, reachable from the backend)
-- DEFAULT_PROVIDER (for example: ollama)
+## Providers and limits
 
-Never commit real API keys, client secrets, cookies, or access tokens. If a key is exposed, revoke it and create a new one.
+- Ollama runs a model on hardware you control. There is no per-token cloud API bill, but performance and capacity depend on your device, memory, electricity, and network.
+- Claude is optional and requires authorized API access. Its usage is subject to Anthropic's quotas, rate limits, and charges.
+- This starter does not bypass provider limits or promise unlimited cloud AI. It currently lets the user choose Ollama or Claude; automatic multi-provider fallback is a future enhancement.
+- Do not silently switch to a paid provider. Ask the user first.
 
-## Suggested routing policy
+## Security
 
-1. Use the provider explicitly selected by the user.
-2. If it returns a temporary rate-limit or availability response, respect its Retry-After value.
-3. Offer a configured fallback provider and clearly show that the provider/model changed.
-4. Never silently switch to a paid provider. Require explicit consent before any billable request.
-5. If no configured provider is available, show a clear message instead of attempting quota evasion.
+Keep `ANTHROPIC_API_KEY` on the backend only. Never put secrets in browser code or commit real credentials. Use HTTPS and an appropriately secured deployment before exposing the app publicly.
 
-## Current status
+## Project status
 
-This folder documents the safe architecture and operating model. It is not yet a deployed, functioning chat service. A backend, frontend, and deployment configuration are still required.
+The first runnable starter has been added to the repository. It has not yet been deployed or tested in your environment.
