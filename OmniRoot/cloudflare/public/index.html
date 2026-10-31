@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10111b">
+  <meta name="description" content="OmniRoot AI, a web-based AI assistant">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="stylesheet" href="/style.css">
+  <title>OmniRoot AI</title>
+</head>
+<body>
+  <main class="layout">
+    <aside class="sidebar">
+      <div class="brand"><span class="logo">O</span><div><b>OmniRoot</b><small>AI WORKSPACE</small></div></div>
+      <button id="newChat" class="new">＋ New chat</button>
+      <div class="label">WORKSPACE</div>
+      <p class="muted">A web-based AI assistant, ready on mobile and desktop.</p>
+      <div class="status"><i id="dot"></i><span id="status">Connecting…</span></div>
+    </aside>
+    <section class="main">
+      <header><span>Personal AI workspace</span><span class="pill">● Cloud AI</span></header>
+      <div id="messages" class="messages">
+        <div id="welcome" class="welcome">
+          <div class="spark">✳</div><p class="eyebrow">WELCOME TO OMNIROOT</p>
+          <h1>What are we<br><em>building today?</em></h1>
+          <p class="muted">Ask a question, explore an idea, or start building.</p>
+          <div class="examples"><button data-prompt="Explain how cloud AI works">Explain cloud AI</button><button data-prompt="Help me plan a Python project">Plan a Python project</button></div>
+        </div>
+      </div>
+      <form id="form" class="composer">
+        <textarea id="prompt" rows="1" maxlength="8000" placeholder="Message OmniRoot…" required></textarea>
+        <div class="sendrow"><span>Model: Llama 3.1 · Cloudflare Workers AI</span><button id="send" type="submit">↑</button></div>
+        <p>AI can make mistakes. Free usage is subject to Cloudflare account limits and availability.</p>
+      </form>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
