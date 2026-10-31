@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10111b">
+  <meta name="description" content="OmniRoot AI multi-provider chat">
+  <link rel="manifest" href="/static/manifest.webmanifest">
+  <link rel="stylesheet" href="/static/style.css">
+  <title>OmniRoot AI</title>
+</head>
+<body>
+  <main class="shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="mark">O</span><div><b>OmniRoot</b><small>AI WORKSPACE</small></div></div>
+      <button class="new-chat" id="newChat">＋ New chat</button>
+      <div class="side-label">WORKSPACE</div>
+      <p class="side-note">Your conversations stay in this browser session.</p>
+      <div class="side-bottom"><span class="dot"></span><span id="status">Checking local AI…</span></div>
+    </aside>
+    <section class="main">
+      <header class="topbar"><span>Personal AI workspace</span><span class="secure">● Local-first</span></header>
+      <div class="chat" id="chat">
+        <div class="welcome" id="welcome">
+          <div class="orb">✳</div>
+          <p class="eyebrow">WELCOME TO OMNIROOT</p>
+          <h1>What are we<br><em>building today?</em></h1>
+          <p class="intro">One workspace. Multiple AI providers. Your choice of model.</p>
+          <div class="suggestions">
+            <button data-prompt="Explain how local AI works">Explain local AI</button>
+            <button data-prompt="Help me plan a Python project">Plan a Python project</button>
+          </div>
+        </div>
+      </div>
+      <form id="composer" class="composer">
+        <div class="controls">
+          <label for="provider">PROVIDER</label>
+          <select id="provider"><option value="ollama">Ollama · Local</option><option value="claude">Claude · API</option></select>
+          <input id="model" aria-label="Model name" placeholder="Model (optional)">
+        </div>
+        <div class="input-row">
+          <textarea id="message" rows="1" placeholder="Message OmniRoot…" required></textarea>
+          <button id="send" type="submit" aria-label="Send message">↑</button>
+        </div>
+        <p class="disclaimer">AI can make mistakes. Claude API usage may incur charges. Local models use your device resources.</p>
+      </form>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
